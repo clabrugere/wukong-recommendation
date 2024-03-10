@@ -1,0 +1,19 @@
+[build-system]
+requires = ["setuptools >= 61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "wukong"
+description = "Implementation of 'Wukong: Towards a Scaling Law for Large-Scale Recommendation'."
+authors = [{name = "Clément Labrugere"}]
+version = "0.1.0"
+license = {file = "LICENSE"}
+requires-python = ">=3.11"
+dependencies = [
+    "torch>=2.1"
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.4"
+]
