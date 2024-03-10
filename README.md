@@ -12,7 +12,7 @@ It presents a novel state-of-the-art architecture for recommendation systems tha
 
 Only a pytorch implementation is presented here for now but eventually a Tensorflow implementation will be added.
 
-note: for simplicity sake, only categorical inputs are supported in this implementation. To handle both categorical and continuous inputs, one will need to projects dense inputs to the same embedding space as the sparse ones and concatenate the two together to obtain the "Dense Embeddings" of the paper.
+note: for simplicity sake, only categorical inputs are supported in this implementation. To handle both categorical and continuous inputs, one will need to projects dense inputs to an embedding space with the same dimension as the sparse one, and concatenate the two together to obtain the "Dense Embeddings" of the paper.
 
 ## Usage <a name = "usage"></a>
 
@@ -54,4 +54,13 @@ outputs = model(inputs)
 
 # Citations
 
-- [Wukong: Towards a Scaling Law for Large-Scale Recommendation](https://arxiv.org/abs/2403.02545v1)
+```bibtex
+@misc{zhang2024wukong,
+      title={Wukong: Towards a Scaling Law for Large-Scale Recommendation}, 
+      author={Buyun Zhang and Liang Luo and Yuxin Chen and Jade Nie and Xi Liu and Daifeng Guo and Yanli Zhao and Shen Li and Yuchen Hao and Yantao Yao and Guna Lakshminarayanan and Ellie Dingqiao Wen and Jongsoo Park and Maxim Naumov and Wenlin Chen},
+      year={2024},
+      eprint={2403.02545},
+      archivePrefix={arXiv},
+      primaryClass={cs.LG}
+}
+```
