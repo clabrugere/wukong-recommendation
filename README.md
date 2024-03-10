@@ -52,7 +52,7 @@ outputs = model(inputs)
 
 ```
 
-# Citations
+## Citations
 
 ```bibtex
 @misc{zhang2024wukong,
