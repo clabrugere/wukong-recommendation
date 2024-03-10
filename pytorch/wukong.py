@@ -118,8 +118,8 @@ class WukongLayer(nn.Module):
     ) -> None:
         super().__init__()
 
-        self.compress = LinearCompressBlock(num_emb_in, num_emb_lcb)
-        self.fm = FactorizationMachineBlock(
+        self.lcb = LinearCompressBlock(num_emb_in, num_emb_lcb)
+        self.fmb = FactorizationMachineBlock(
             num_emb_in,
             num_emb_fmb,
             dim_emb,
@@ -137,10 +137,10 @@ class WukongLayer(nn.Module):
 
     def forward(self, inputs: Tensor) -> Tensor:
         # (bs, num_emb_in, dim_emb) -> (bs, num_emb_lcb, dim_emb)
-        lcb = self.compress(inputs)
+        lcb = self.lcb(inputs)
 
         # (bs, num_emb_in, dim_emb) -> (bs, num_emb_fmb, dim_emb)
-        fmb = self.fm(inputs)
+        fmb = self.fmb(inputs)
 
         # (bs, num_emb_lcb, dim_emb), (bs, num_emb_fmb, dim_emb) -> (bs, num_emb_lcb + num_emb_fmb, dim_emb)
         outputs = torch.concat((fmb, lcb), dim=1)
