@@ -26,7 +26,7 @@ NUM_DENSE_FEATURES = 16
 
 sparse_inputs = torch.multinomial(
     torch.rand((BATCH_SIZE, NUM_EMBEDDING)),
-    NUM_FEATURES,
+    NUM_CAT_FEATURES,
     replacement=True,
 )
 dense_inputs = torch.rand(BATCH_SIZE, NUM_DENSE_FEATURES)
