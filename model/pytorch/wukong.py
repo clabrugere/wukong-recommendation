@@ -1,6 +1,7 @@
 import torch
 from torch import Tensor, nn
 
+from pytorch.embedding import Embedding
 from pytorch.mlp import MLP
 
 
@@ -157,7 +158,8 @@ class Wukong(nn.Module):
         num_layers: int,
         num_emb: int,
         dim_emb: int,
-        dim_input: int,
+        dim_input_sparse: int,
+        dim_input_dense: int,
         num_emb_lcb: int,
         num_emb_fmb: int,
         rank_fmb: int,
@@ -174,9 +176,9 @@ class Wukong(nn.Module):
         self.num_emb_lcb = num_emb_lcb
         self.num_emb_fmb = num_emb_fmb
 
-        self.embedding = nn.Embedding(num_emb, dim_emb)
+        self.embedding = Embedding(num_emb, dim_emb, dim_input_dense)
 
-        num_emb_in = dim_input
+        num_emb_in = dim_input_sparse + dim_input_dense
         self.interaction_layers = nn.Sequential()
         for _ in range(num_layers):
             self.interaction_layers.append(
@@ -201,8 +203,8 @@ class Wukong(nn.Module):
             dropout,
         )
 
-    def forward(self, inputs: Tensor) -> Tensor:
-        outputs = self.embedding(inputs)
+    def forward(self, sparse_inputs: Tensor, dense_inputs) -> Tensor:
+        outputs = self.embedding(sparse_inputs, dense_inputs)
         outputs = self.interaction_layers(outputs)
         outputs = outputs.view(-1, (self.num_emb_lcb + self.num_emb_fmb) * self.dim_emb)
         outputs = self.projection_head(outputs)
