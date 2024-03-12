@@ -168,7 +168,7 @@ class Wukong(nn.Module):
         num_hidden_head: int,
         dim_hidden_head: int,
         dim_output: int,
-        dropout: float,
+        dropout: float = 0.0,
     ) -> None:
         super().__init__()
 

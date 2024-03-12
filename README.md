@@ -15,6 +15,7 @@ Only a pytorch implementation is presented here for now but eventually a Tensorf
 ## Usage <a name = "usage"></a>
 
 ```python
+import torch
 from model.pytorch import Wukong
 
 
@@ -45,12 +46,11 @@ model = Wukong(
     dim_hidden_wukong=512,
     num_hidden_head=2,
     dim_hidden_head=512,
-    dim_output=1
+    dim_output=1,
 )
 
 # outputs are the logits and will need to be rescaled with a sigmoid to get a probability
 outputs = model(sparse_inputs, dense_inputs)
-
 ```
 
 ## Citations
