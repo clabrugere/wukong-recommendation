@@ -15,7 +15,7 @@ Only a pytorch implementation is presented here for now but eventually a Tensorf
 ## Usage <a name = "usage"></a>
 
 ```python
-from pytorch import Wukong
+from model.pytorch import Wukong
 
 
 # mock input data

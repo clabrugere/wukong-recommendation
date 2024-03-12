@@ -1,8 +1,8 @@
 import torch
 from torch import Tensor, nn
 
-from pytorch.embedding import Embedding
-from pytorch.mlp import MLP
+from model.pytorch.embedding import Embedding
+from model.pytorch.mlp import MLP
 
 
 class LinearCompressBlock(nn.Module):
