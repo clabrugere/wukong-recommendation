@@ -1,9 +1,9 @@
 import pytest
-import torch
+import tensorflow as tf
 
-from model.pytorch.embedding import Embedding
-from model.pytorch.mlp import MLP
-from model.pytorch.wukong import (
+from model.tensorflow.embedding import Embedding
+from model.tensorflow.mlp import MLP
+from model.tensorflow.wukong import (
     FactorizationMachineBlock,
     LinearCompressBlock,
     ResidualProjection,
@@ -20,42 +20,37 @@ DIM_EMB = 128
 
 @pytest.fixture(scope="module")
 def sample_2d_continuous_input():
-    return torch.rand(BATCH_SIZE, NUM_DENSE_FEATURES)
+    return tf.random.uniform((BATCH_SIZE, NUM_DENSE_FEATURES))
 
 
 @pytest.fixture(scope="module")
 def sample_3d_continuous_input():
-    return torch.rand(BATCH_SIZE, NUM_CAT_FEATURES, DIM_EMB)
+    return tf.random.uniform((BATCH_SIZE, NUM_CAT_FEATURES, DIM_EMB))
 
 
 @pytest.fixture(scope="module")
 def sample_categorical_input():
-    return torch.multinomial(
-        torch.rand((BATCH_SIZE, NUM_EMBEDDING)),
-        NUM_CAT_FEATURES,
-        replacement=True,
-    )
+    return tf.random.categorical(tf.random.uniform((BATCH_SIZE, NUM_EMBEDDING)), NUM_CAT_FEATURES, dtype=tf.int32)
 
 
 @pytest.fixture
 def embedding_layer() -> Embedding:
-    return Embedding(NUM_EMBEDDING, DIM_EMB, NUM_DENSE_FEATURES)
+    return Embedding(NUM_EMBEDDING, DIM_EMB)
 
 
 @pytest.fixture
 def mlp_model() -> MLP:
-    return MLP(dim_in=NUM_DENSE_FEATURES, num_hidden=3, dim_hidden=16)
+    return MLP(num_hidden=3, dim_hidden=16)
 
 
 @pytest.fixture
 def lcb_layer() -> LinearCompressBlock:
-    return LinearCompressBlock(NUM_CAT_FEATURES, NUM_CAT_FEATURES // 2)
+    return LinearCompressBlock(NUM_CAT_FEATURES // 2)
 
 
 @pytest.fixture
 def fmb_layer() -> FactorizationMachineBlock:
     return FactorizationMachineBlock(
-        num_emb_in=NUM_CAT_FEATURES,
         num_emb_out=16,
         dim_emb=DIM_EMB,
         rank=4,
@@ -67,19 +62,17 @@ def fmb_layer() -> FactorizationMachineBlock:
 
 @pytest.fixture
 def residual_projection() -> ResidualProjection:
-    return ResidualProjection(NUM_CAT_FEATURES, NUM_CAT_FEATURES // 2)
+    return ResidualProjection(NUM_CAT_FEATURES // 2)
 
 
 @pytest.fixture
 def residual_projection_identity() -> ResidualProjection:
-    return ResidualProjection(NUM_CAT_FEATURES, NUM_CAT_FEATURES)
+    return ResidualProjection(NUM_CAT_FEATURES)
 
 
 @pytest.fixture
 def wukong_layer() -> WukongLayer:
     return WukongLayer(
-        num_emb_in=NUM_CAT_FEATURES,
-        dim_emb=DIM_EMB,
         num_emb_lcb=16,
         num_emb_fmb=16,
         rank_fmb=8,
@@ -95,8 +88,6 @@ def wukong_model() -> Wukong:
         num_layers=2,
         num_sparse_emb=NUM_EMBEDDING,
         dim_emb=DIM_EMB,
-        dim_input_sparse=NUM_CAT_FEATURES,
-        dim_input_dense=NUM_DENSE_FEATURES,
         num_emb_lcb=16,
         num_emb_fmb=16,
         rank_fmb=8,

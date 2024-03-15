@@ -10,13 +10,15 @@ Implements the paper [Wukong: Towards a Scaling Law for Large-Scale Recommendati
 
 It presents a novel state-of-the-art architecture for recommendation systems that additionally follows a similar scaling law of large language models, where the model performance seems to increase with respect to the model scale without a clear asymptote on the scales explored in the paper.
 
-Only a pytorch implementation is presented here for now but eventually a Tensorflow implementation will be added.
+This repository contains implementations for both Pytorch and Tensoflow.
 
 ## Usage <a name = "usage"></a>
 
+### Pytorch
+
 ```python
 import torch
-from model.pytorch import Wukong
+from model.pytorch import WukongTorch
 
 
 # mock input data
@@ -33,7 +35,7 @@ sparse_inputs = torch.multinomial(
 dense_inputs = torch.rand(BATCH_SIZE, NUM_DENSE_FEATURES)
 
 # takes hyperparameters from the paper
-model = Wukong(
+model = WukongTorch(
     num_layers=3,
     num_emb=NUM_EMBEDDING,
     dim_emb=128,
@@ -51,6 +53,41 @@ model = Wukong(
 
 # outputs are the logits and will need to be rescaled with a sigmoid to get a probability
 outputs = model(sparse_inputs, dense_inputs)
+```
+
+### Tensorflow
+
+```python
+import tensorflow as tf
+from model.tensorflow import WukongTf
+
+
+BATCH_SIZE = 1024
+NUM_EMBEDDING = 10_000
+NUM_CAT_FEATURES = 32
+NUM_DENSE_FEATURES = 16
+
+inputs = [
+    tf.random.categorical(tf.random.uniform((BATCH_SIZE, NUM_EMBEDDING)), NUM_CAT_FEATURES, dtype=tf.int32),
+    tf.random.uniform((BATCH_SIZE, NUM_DENSE_FEATURES)),
+]
+
+model = WukongTf(
+    num_layers=2,
+    num_sparse_emb=NUM_EMBEDDING,
+    dim_emb=128,
+    num_emb_lcb=16,
+    num_emb_fmb=16,
+    rank_fmb=8,
+    num_hidden_wukong=2,
+    dim_hidden_wukong=16,
+    num_hidden_head=2,
+    dim_hidden_head=32,
+    dim_output=1,
+    dropout=0.0,
+)
+
+outputs = model(inputs)
 ```
 
 ## Citations

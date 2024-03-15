@@ -156,7 +156,7 @@ class Wukong(nn.Module):
     def __init__(
         self,
         num_layers: int,
-        num_emb: int,
+        num_sparse_emb: int,
         dim_emb: int,
         dim_input_sparse: int,
         dim_input_dense: int,
@@ -176,7 +176,7 @@ class Wukong(nn.Module):
         self.num_emb_lcb = num_emb_lcb
         self.num_emb_fmb = num_emb_fmb
 
-        self.embedding = Embedding(num_emb, dim_emb, dim_input_dense)
+        self.embedding = Embedding(num_sparse_emb, dim_emb, dim_input_dense)
 
         num_emb_in = dim_input_sparse + dim_input_dense
         self.interaction_layers = nn.Sequential()

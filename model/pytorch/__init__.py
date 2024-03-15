@@ -1,1 +1,1 @@
-from .wukong import Wukong
+from model.pytorch.wukong import Wukong as WukongTorch
