@@ -2,7 +2,7 @@ from typing import Any
 
 import tensorflow as tf
 from keras import Model, Sequential
-from keras.layers import Dense, Identity, Layer, LayerNormalization
+from keras.layers import Identity, Layer, LayerNormalization
 from tensorflow import Tensor, TensorShape
 
 from model.tensorflow.embedding import Embedding

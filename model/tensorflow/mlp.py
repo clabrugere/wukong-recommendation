@@ -1,6 +1,5 @@
 from typing import Any
 
-import tensorflow as tf
 from keras import Sequential
 from keras.layers import BatchNormalization, Dense, Dropout, ReLU
 

@@ -1,9 +1,8 @@
 from typing import Any
 
 import tensorflow as tf
-from keras.layers import Dense
+from keras.layers import Dense, Layer
 from keras.layers import Embedding as SparseEmbedding
-from keras.layers import Layer
 from tensorflow import Tensor, TensorShape
 
 
