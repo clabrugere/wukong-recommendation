@@ -2,7 +2,15 @@ from torch import nn
 
 
 class MLP(nn.Sequential):
-    def __init__(self, dim_in, num_hidden, dim_hidden, dim_out=None, batch_norm=True, dropout=0.0):
+    def __init__(
+        self,
+        dim_in: int,
+        num_hidden: int,
+        dim_hidden: int,
+        dim_out: int | None = None,
+        batch_norm: bool = True,
+        dropout: float = 0.0,
+    ) -> None:
         layers = []
         for _ in range(num_hidden - 1):
             layers.append(nn.Linear(dim_in, dim_hidden))
