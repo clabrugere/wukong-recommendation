@@ -16,4 +16,4 @@ class Embedding(nn.Module):
         sparse_outputs = self.sparse_embedding(sparse_inputs)
         dense_outputs = self.dense_embedding(dense_inputs).view(-1, self.dim_input_dense, self.dim_emb)
 
-        return torch.cat([sparse_outputs, dense_outputs], dim=1)
+        return torch.concat((sparse_outputs, dense_outputs), dim=1)
