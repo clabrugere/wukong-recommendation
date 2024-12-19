@@ -6,7 +6,7 @@
 
 # Wukong for large-scale recommendation
 
-Implements the paper [Wukong: Towards a Scaling Law for Large-Scale Recommendation](https://arxiv.org/abs/2403.02545v1) from Meta.
+Unofficial implementation of the paper [Wukong: Towards a Scaling Law for Large-Scale Recommendation](https://arxiv.org/abs/2403.02545v1) from Meta.
 
 It presents a novel state-of-the-art architecture for recommendation systems that additionally follows a similar scaling law of large language models, where the model performance seems to increase with respect to the model scale without a clear asymptote on the scales explored in the paper.
 
